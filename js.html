@@ -1,57 +1,62 @@
 <!-- archivo js !-->
 <script>
+    function crearTablaContactos() {
+        // Eliminar tabla existente si la hay (esto sí va antes de la llamada)
+        let tablaExistente = document.getElementById('tablaContactos');
+        if (tablaExistente) tablaExistente.remove();
 
-
-    function crearTablaContactos()
-    {
-
-        let tabla = document.getElementById('tablaContactos')
-        if (tabla) tabla.remove();
-
-         // Limpiar mensaje de carga y mostrar spinner opcional
+        // Limpiar mensaje de carga y mostrar spinner opcional
         let contenedor = document.getElementById('divContactos');
         contenedor.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
 
+        google.script.run
+            .withSuccessHandler(function(obj) {
+                // Validar datos
+                if (!obj || obj.length === 0) {
+                    contenedor.innerHTML = '<p class="alert alert-warning">No hay contactos.</p>';
+                    return;
+                }
 
-        google.script.run.withSuccessHandler(
-                         
-
-            function(obj){
-                
+                // Crear tabla nueva
                 let tabla = document.createElement('table');
                 tabla.id = 'tablaContactos';
+                let thead = document.createElement('thead');
+                let tbody = document.createElement('tbody');
 
-                let tablaHeader = document.createElement('thead');
-                let tablaBody = document.createElement('tbody');
-                
-                Array.from(obj).forEach((filaActual, i) =>
-                {
+                // Recorrer filas
+                obj.forEach((filaActual, i) => {
                     let fila = document.createElement('tr');
                     filaActual.forEach(celdaActual => {
-                        let celda = document.createElement('td');
-                        celda.textContent = celdaActual;
-                        fila.appendChild(celda);
+                        if (i === 0) {
+                            let th = document.createElement('th');
+                            th.textContent = celdaActual;
+                            fila.appendChild(th);
+                        } else {
+                            let td = document.createElement('td');
+                            td.textContent = celdaActual;
+                            fila.appendChild(td);
+                        }
                     });
-                    if(i == 0){
-                      tablaHeader.appendChild(fila);
-                      tabla.appendChild(tablaHeader);
+                    if (i === 0) {
+                        thead.appendChild(fila);
+                    } else {
+                        tbody.appendChild(fila);
                     }
-                    else {
-                      tablaBody.appendChild(fila);
-                    }
-                    
                 });
-                //agregamos clases a la cabecera
-                tablaHeader.classList.add('table-dark');
-                // agregamos el cuerpo a la tabla
-                tabla.appendChild(tablaBody);
-                // agregamos clase a la tabla
-                tabla.classList.add('table','table-striped','border','border-3','table-dark');
-                // agregamos tabla a la pagina
-                document.getElementById('divContactos').appendChild(tabla);
-            }
-        ).obtenerContactos();
-       
+
+                // Aplicar clases
+                thead.classList.add('table-dark');
+                tabla.classList.add('table', 'table-striped', 'border', 'border-3', 'table-dark');
+                tabla.appendChild(thead);
+                tabla.appendChild(tbody);
+
+                // Limpiar contenedor y mostrar tabla
+                contenedor.innerHTML = '';
+                contenedor.appendChild(tabla);
+            })
+            .withFailureHandler(function(error) {
+                contenedor.innerHTML = '<p class="alert alert-danger">Error: ' + error.message + '</p>';
+            })
+            .obtenerContactos();
     }
-    
 </script>

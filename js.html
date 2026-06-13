@@ -1,62 +1,116 @@
-<!-- archivo js !-->
+<!-- archivo js.html -->
 <script>
+    // Variable global para el contenedor (o se pasa como parámetro)
+    let contenedorContactos = null;
+
     function crearTablaContactos() {
-        // Eliminar tabla existente si la hay (esto sí va antes de la llamada)
+        // Obtener referencia al contenedor
+        contenedorContactos = document.getElementById('divContactos');
+        if (!contenedorContactos) return;
+
+        // Eliminar tabla existente
         let tablaExistente = document.getElementById('tablaContactos');
         if (tablaExistente) tablaExistente.remove();
 
-        // Limpiar mensaje de carga y mostrar spinner opcional
-        let contenedor = document.getElementById('divContactos');
-        contenedor.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
+        // Mostrar spinner de carga
+        contenedorContactos.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
 
+        // Llamar a Google Apps Script
         google.script.run
-            .withSuccessHandler(function(obj) {
-                // Validar datos
-                if (!obj || obj.length === 0) {
-                    contenedor.innerHTML = '<p class="alert alert-warning">No hay contactos.</p>';
-                    return;
-                }
-
-                // Crear tabla nueva
-                let tabla = document.createElement('table');
-                tabla.id = 'tablaContactos';
-                let thead = document.createElement('thead');
-                let tbody = document.createElement('tbody');
-
-                // Recorrer filas
-                obj.forEach((filaActual, i) => {
-                    let fila = document.createElement('tr');
-                    filaActual.forEach(celdaActual => {
-                        if (i === 0) {
-                            let th = document.createElement('th');
-                            th.textContent = celdaActual;
-                            fila.appendChild(th);
-                        } else {
-                            let td = document.createElement('td');
-                            td.textContent = celdaActual;
-                            fila.appendChild(td);
-                        }
-                    });
-                    if (i === 0) {
-                        thead.appendChild(fila);
-                    } else {
-                        tbody.appendChild(fila);
-                    }
-                });
-
-                // Aplicar clases
-                thead.classList.add('table-dark');
-                tabla.classList.add('table', 'table-striped', 'border', 'border-3', 'table-dark');
-                tabla.appendChild(thead);
-                tabla.appendChild(tbody);
-
-                // Limpiar contenedor y mostrar tabla
-                contenedor.innerHTML = '';
-                contenedor.appendChild(tabla);
-            })
-            .withFailureHandler(function(error) {
-                contenedor.innerHTML = '<p class="alert alert-danger">Error: ' + error.message + '</p>';
-            })
+            .withSuccessHandler(crearTablaContactosOk)
+            .withFailureHandler(crearTablaContactosError)  // nombre corregido
             .obtenerContactos();
+    }
+
+    function crearTablaContactosOk(obj) {
+        // Validar datos
+        if (!obj || obj.length === 0) {
+            contenedorContactos.innerHTML = '<p class="alert alert-warning">No hay contactos.</p>';
+            return;
+        }
+
+        // Crear tabla nueva
+        let tabla = document.createElement('table');
+        tabla.id = 'tablaContactos';
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        obj.forEach((filaActual, i) => {
+            let fila = document.createElement('tr');
+            filaActual.forEach(celdaActual => {
+                if (i === 0) {
+                    let th = document.createElement('th');
+                    th.textContent = celdaActual;
+                    fila.appendChild(th);
+                } else {
+                    let td = document.createElement('td');
+                    td.textContent = celdaActual;
+                    fila.appendChild(td);
+                }
+            });
+            if (i === 0) {
+                thead.appendChild(fila);
+            } else {
+                tbody.appendChild(fila);
+            }
+        });
+
+        // Estilos
+        thead.classList.add('table-dark');
+        tabla.classList.add('table', 'table-striped', 'border', 'border-3', 'table-dark');
+        tabla.appendChild(thead);
+        tabla.appendChild(tbody);
+
+        // Limpiar y mostrar
+        contenedorContactos.innerHTML = '';
+        contenedorContactos.appendChild(tabla);
+
+        // Opcional: notificación de éxito
+        crearNotificacion('success', 'Contactos cargados correctamente', 'Éxito');
+    }
+
+    function crearTablaContactosError(error) {
+        console.error('Error:', error);
+        if (contenedorContactos) {
+            contenedorContactos.innerHTML = '<p class="alert alert-danger">Error al cargar los contactos: ' + error.message + '</p>';
+        }
+        // Notificación de error
+        crearNotificacion('danger', 'No se pudieron obtener los contactos', 'Error');
+    }
+
+    // Función de notificación mejorada
+    function crearNotificacion(tipo, mensaje, titulo) {
+        let elementoNotificacion = document.getElementById('notificacion');
+        if (!elementoNotificacion) return;
+
+        let toast = bootstrap.Toast.getOrCreateInstance(elementoNotificacion);
+        let tituloEl = document.getElementById('tituloNotificacion');
+        let mensajeEl = document.getElementById('mensajeNotificacion');
+        let iconoEl = document.getElementById('iconoNotificacion');
+
+        if (tituloEl) tituloEl.textContent = titulo;
+        if (mensajeEl) mensajeEl.textContent = mensaje;
+
+        // Cambiar ícono según tipo
+        if (iconoEl) {
+            iconoEl.className = '';
+            if (tipo === 'success') {
+                iconoEl.classList.add('bi', 'bi-check-circle-fill', 'text-success');
+            } else {
+                iconoEl.classList.add('bi', 'bi-exclamation-triangle-fill', 'text-danger');
+            }
+        }
+
+        // Cambiar color de fondo del toast (opcional, usa clases de Bootstrap)
+        elementoNotificacion.classList.remove('bg-success', 'bg-danger');
+        if (tipo === 'success') {
+            elementoNotificacion.classList.add('bg-success', 'text-white');
+        } else {
+            elementoNotificacion.classList.add('bg-danger', 'text-white');
+        }
+
+        toast.show();
+        // Ocultar después de 3 segundos
+        setTimeout(() => toast.hide(), 3000);
     }
 </script>

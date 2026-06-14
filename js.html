@@ -2,6 +2,9 @@
 <script>
     // Variable global para el contenedor (o se pasa como parámetro)
     let contenedorContactos = null;
+    const NOTIFICACION_OK = 1;
+    const NOTIFICACION_DANGER = 2;
+    const NOTIFICACION_WARNING = 3;
 
     function crearTablaContactos() {
         // Obtener referencia al contenedor
@@ -57,7 +60,7 @@
 
         // Estilos
         thead.classList.add('table-dark');
-        tabla.classList.add('table', 'table-striped', 'border', 'border-3', 'table-dark');
+        tabla.classList.add('table', 'table-striped', 'border', 'border-4', 'table-dark','border-dark');
         tabla.appendChild(thead);
         tabla.appendChild(tbody);
 
@@ -67,6 +70,7 @@
 
         // Opcional: notificación de éxito
         crearNotificacion('success', 'Contactos cargados correctamente', 'Éxito');
+        //crearNotificacion(NOTIFICACION_OK, 'Contactos cargados correctamente', 'Éxito');
     }
 
     function crearTablaContactosError(error) {
@@ -76,6 +80,7 @@
         }
         // Notificación de error
         crearNotificacion('danger', 'No se pudieron obtener los contactos', 'Error');
+        //crearNotificacion(NOTIFICACION_DANGER, 'No se pudieron obtener los contactos', 'Error');
     }
 
     // Función de notificación mejorada
@@ -92,8 +97,32 @@
         if (mensajeEl) mensajeEl.textContent = mensaje;
 
         // Cambiar ícono según tipo
+
+        /*
+        switch (tipo) {
+            case NOTIFICACION_OK:
+                {
+                    iconoEl.className = '';
+                    iconoEl.classList.add('bi', 'bi-check-circle-fill');
+                    elementoNotificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-verde-oscuro');
+                }
+            case NOTIFICACION_DANGER:
+                {
+                    iconoEl.className = '';
+                    iconoEl.classList.add('bi', 'bi-bug-fill');
+                    elementoNotificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-rojo-oscuro');
+                }
+            case NOTIFICACION_WARNING:
+                {
+                    iconoEl.className = '';
+                    iconoEl.classList.add('bi', 'bi-exclamation-triangle-fill');
+                    elementoNotificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-amarillo-oscuro');
+                }
+        }
+        */
+
         if (iconoEl) {
-            iconoEl.className = '';
+
             if (tipo === 'success') {
                 iconoEl.classList.add('bi', 'bi-check-circle-fill', 'text-success');
             } else {

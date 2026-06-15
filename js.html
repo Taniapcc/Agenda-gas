@@ -7,13 +7,17 @@
         // Obtener referencia al contenedor
         contenedorContactos = document.getElementById('divContactos');
         if (!contenedorContactos) return;
+       
 
         // Eliminar tabla existente
-        let tablaExistente = document.getElementById('tablaContactos');
-        if (tablaExistente) tablaExistente.remove();
+        eliminarTabla();
+        eliminarLoader();
+
+        contenedorContactos.innerHTML = '';      // Limpia mensajes residuales
+        crearLoader('divContactos');
 
         // Mostrar spinner de carga
-        contenedorContactos.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
+        //contenedorContactos.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
 
         // Llamar a Google Apps Script
         google.script.run
@@ -127,8 +131,7 @@
 
     function crearIconNotificacionError(){
        document.getElementById('iconoNotificacion').className= '';
-       document.getElementById('iconoNotificacion').classList.add('bi', 'bi-x-circle-fill');
-                 
+       document.getElementById('iconoNotificacion').classList.add('bi', 'bi-x-circle-fill');                 
     }
 
     function crearIconNotificacionWarning(){
@@ -141,5 +144,39 @@
        elementoNotificacion.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue(color);
       }
 
+   function eliminarTabla(){
+    let tablaExistente = document.getElementById('tablaContactos');
+        if (tablaExistente) tablaExistente.remove();
+   }
+
+   function crearLoaderOld(elementoPadre) {
+        eliminarLoader();
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.classList.add('lds-ellipsis');
+        document.getElementById(elementoPadre).appendChild(loader);
+    }
+
+    function crearLoader(elementoPadre) {
+        eliminarLoader();
+        let padre = document.getElementById(elementoPadre);
+        if (!padre) return;
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        loader.classList.add('lds-ellipsis');
+         for (let i = 0; i < 4; i++) loader.appendChild(document.createElement('div'));
+        padre.appendChild(loader);
+    }
+    
+
+    function eliminarLoader() {
+        let loader = document.getElementById('loader');
+        if (loader) loader.remove();
+
+        }
 
 </script>

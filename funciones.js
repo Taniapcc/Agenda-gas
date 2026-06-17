@@ -1,5 +1,7 @@
 // Archivo funciones.gs
-const HOJA = SpreadsheetApp.openById('1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I').getActiveSheet();
+const ID_HOJA = '1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I';
+// SpreadsheetApp.openById('AAA1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I').getActiveSheet();
+
  
 function doGet(e) {
   // Handle GET request parameters
@@ -19,9 +21,26 @@ function obtenerDatosHTML(nombre) {
 
 // obtener datos de la hoja de datos
 function obtenerContactos() {
-    return HOJA.getDataRange().getValues();
+   // return HOJA.getDataRange().getValues();
+
+   try {
+    let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
+    let datos = hoja.getDataRange().getValues(); 
+    
+    return datos;
+  } catch (e) {
+    throw new Error('Error al obtener contactos: ' + e.message);
+  }
 }
 
 function insertarContacto(nombre, correo) {
-   HOJA.appendRow([nombre,correo]);
+  try {
+
+    let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
+    hoja.appendRow([nombre, correo]);
+    
+    return true;
+  } catch (e) {
+    throw new Error('Error al insertar contacto: ' + e.message);
+  }
 }

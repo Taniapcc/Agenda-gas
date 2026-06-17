@@ -7,9 +7,7 @@
         //Obtener datos
         let nombre  = document.getElementById('nombre').value;
         let correo  = document.getElementById('correo').value;
-        // Eliminar tabla
-        eliminarTabla();
-
+        
         // Obtener referencia al contenedor
         contenedorContactos = document.getElementById('divContactos');
         if (!contenedorContactos) return;
@@ -28,18 +26,29 @@
     }
 
     function contactoInsertadoOk(){
+           
       // eliminamos los datos de los input
+
       document.getElementById('nombre').value = "";
       document.getElementById('correo').value = "";
       // mostrar notificacion
       crearNotificacionOk('Contacto insertado correctamente','Contacto Ok');
-
+      //eliminar loader
       eliminarLoader();
+      //crear Tabla
+      crearTablaContactos();
     }
 
     function contactoInsertadoError(){
+       // eliminamos los datos de los input
+      document.getElementById('nombre').value = "";
+      document.getElementById('correo').value = "";         
+      //Mostrad notificacion
       crearNotificacionError('No se ha insertado correctamente','Error Contacto');
+      //elimnar Loader
       eliminarLoader();
+      //crear Tabla
+      crearTablaContactos();
     }
 
   

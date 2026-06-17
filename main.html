@@ -2,7 +2,7 @@
 <main>
 
     <div class="d-flex justify-content-center my-3">
-        <form action="https://script.google.com/macros/s/AKfycbw-riNG3ezuRCd43LrWSgyjTZLnp6oKTD1mKPFC2yJD/dev" method="post"
+        <form onsubmit="insertarContacto()" method="dialog"
             id="formulario">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Introduce el nombre contacto: </label>
@@ -14,7 +14,7 @@
             </div>
             <!--botones-->
             <button type="button" class="btn btn-success m-3" onclick="crearTablaContactos()">Mostrar contactos</button>
-            <button type="submit" class="btn btn-primary">Crear contacto</button>
+            <button type="submit" class="btn btn-primary m-3">Crear contacto</button>
         </form>
     </div>
 

@@ -2,23 +2,57 @@
 <script>
     // Variable global para el contenedor (o se pasa como parámetro)
     let contenedorContactos = null;
+
+    function insertarContacto() {
+        //Obtener datos
+        let nombre  = document.getElementById('nombre').value;
+        let correo  = document.getElementById('correo').value;
+        // Eliminar tabla
+        eliminarTabla();
+
+        // Obtener referencia al contenedor
+        contenedorContactos = document.getElementById('divContactos');
+        if (!contenedorContactos) return;
+        
+        // Eliminar tabla existente
+        eliminarLoader();
+
+        contenedorContactos.innerHTML = '';      // Limpia mensajes residuales
+        crearLoader('divContactos');
+
+        // Llamar a Google Apps Script
+        google.script.run
+            .withSuccessHandler(contactoInsertadoOk)
+            .withFailureHandler(contactoInsertadoError)  // nombre corregido
+            .insertarContacto(nombre,correo);
+    }
+
+    function contactoInsertadoOk(){
+      // eliminamos los datos de los input
+      document.getElementById('nombre').value = "";
+      document.getElementById('correo').value = "";
+      // mostrar notificacion
+      crearNotificacionOk('Contacto insertado correctamente','Contacto Ok');
+
+      eliminarLoader();
+    }
+
+    function contactoInsertadoError(){
+      crearNotificacionError('No se ha insertado correctamente','Error Contacto');
+      eliminarLoader();
+    }
+
   
     function crearTablaContactos() {
         // Obtener referencia al contenedor
         contenedorContactos = document.getElementById('divContactos');
         if (!contenedorContactos) return;
-       
-
         // Eliminar tabla existente
         eliminarTabla();
         eliminarLoader();
 
         contenedorContactos.innerHTML = '';      // Limpia mensajes residuales
         crearLoader('divContactos');
-
-        // Mostrar spinner de carga
-        //contenedorContactos.innerHTML = '<div class="text-center"><div class="spinner-border text-primary"></div><p>Cargando...</p></div>';
-
         // Llamar a Google Apps Script
         google.script.run
             .withSuccessHandler(crearTablaContactosOk)

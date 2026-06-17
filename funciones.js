@@ -1,6 +1,6 @@
 // Archivo funciones.gs
-
 const HOJA = SpreadsheetApp.openById('1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I').getActiveSheet();
+ 
 function doGet(e) {
   // Handle GET request parameters
   const params = e.parameter;
@@ -19,9 +19,9 @@ function obtenerDatosHTML(nombre) {
 
 // obtener datos de la hoja de datos
 function obtenerContactos() {
-  return HOJA.getDataRange().getValues();
+    return HOJA.getDataRange().getValues();
 }
 
 function insertarContacto(nombre, correo) {
-  HOJA.appendRow([nombre,correo]);
+   HOJA.appendRow([nombre,correo]);
 }

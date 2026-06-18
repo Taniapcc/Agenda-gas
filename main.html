@@ -13,7 +13,7 @@
 
     <!-- Tabla de contactos -->
     <div class="container col-12 col-lg-6 d-flex justify-content-center" id="divContactos">
-       <!-- <p class="text-muted">Cargando contactos...</p> -->
+        <!-- <p class="text-muted">Cargando contactos...</p> -->
     </div>
 
     <!-- Notificaciones -->
@@ -49,14 +49,30 @@
 
                     <div class="modal-body">
 
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Introduce el nombre contacto: </label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required>
+                        <!--Nombres y apellidos-->
+
+                        <div class="row mb-3">
+
+                            <div class="col-4">
+                                <label for="nombre" class="form-label">Nombres: </label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" required>
+                            </div>
+
+                            <div class="col-8">
+                                <label for="apellidos" class="form-label">Apellidos: </label>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos" required>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Introduce correo: </label>
-                            <input type="email" class="form-control" name="correo" id="correo" required>
+                        <!-- Correo y Teléfono-->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                            <input type="email" class="form-control me-4" name="correo" id="correo" required>
+                            <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="tel" class="form-control" name="telf" id="telf" required>
+
+
+
                         </div>
 
                     </div>

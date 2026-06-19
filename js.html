@@ -1,4 +1,5 @@
 <!-- archivo js.html -->
+ <!-- manejo de js programas HTML -->
 <script>
     // Variable global para el contenedor (o se pasa como parámetro)
     let contenedorContactos = null;
@@ -6,7 +7,9 @@
     function insertarContacto() {
         //Obtener datos
         let nombre = document.getElementById('nombre').value;
+        let apellidos = document.getElementById('apellidos').value;
         let correo = document.getElementById('correo').value;
+        let telf= document.getElementById('telf').value;
         //cerrar Modal
         let myModalEl = document.getElementById('crearContactoModal');
         let modal = bootstrap.Modal.getInstance(myModalEl).hide(); // Returns a Bootstrap modal instance
@@ -25,7 +28,7 @@
         google.script.run
             .withSuccessHandler(contactoInsertadoOk)
             .withFailureHandler(contactoInsertadoError)  // nombre corregido
-            .insertarContacto(nombre, correo);
+            .insertarContacto(nombre, apellidos, correo, telf);
     }
 
     function contactoInsertadoOk() {
@@ -33,7 +36,9 @@
         // eliminamos los datos de los input
 
         document.getElementById('nombre').value = "";
+        document.getElementById('apellidos').value = "";
         document.getElementById('correo').value = "";
+        document.getElementById('telf').value = "";
         // mostrar notificacion
         crearNotificacionOk('Contacto insertado correctamente', 'Contacto Ok');
         //eliminar loader

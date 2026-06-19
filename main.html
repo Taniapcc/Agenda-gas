@@ -38,7 +38,7 @@
     <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
         aria-hidden="true">
 
-        <div class="modal-dialog">
+        <div class="modal-lg modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tituloCrearContactoModal">Nuevo Contacto</h5>
@@ -55,12 +55,12 @@
 
                             <div class="col-4">
                                 <label for="nombre" class="form-label">Nombres: </label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                <input type="text" class="form-control" name="nombre" id="nombre" pattern="[^0-9]*" title="El nombre no puede contener números" required> 
                             </div>
 
                             <div class="col-8">
                                 <label for="apellidos" class="form-label">Apellidos: </label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos" required>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos" pattern="[^0-9]*" title="El apellido no puede contener números" required>
                             </div>
                         </div>
 
@@ -68,8 +68,9 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
                             <input type="email" class="form-control me-4" name="correo" id="correo" required>
+
                             <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                            <input type="tel" class="form-control" name="telf" id="telf" required>
+                            <input type="tel" class="form-control" name="telf" id="telf" pattern="[\d]{9,11}" title="El teléfono debe contener entre 9 y11 dígitos numéricos" required>
 
 
 

@@ -1,4 +1,5 @@
 // Archivo funciones.gs
+// Maneja funciones de google sheets
 const ID_HOJA = '1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I';
 // SpreadsheetApp.openById('AAA1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I').getActiveSheet();
 
@@ -33,11 +34,11 @@ function obtenerContactos() {
   }
 }
 
-function insertarContacto(nombre, correo) {
+function insertarContacto(nombre, apellidos, correo, telf) {
   try {
 
     let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
-    hoja.appendRow([nombre, correo]);
+    hoja.appendRow([nombre, apellidos, correo, telf]);
     
     return true;
   } catch (e) {

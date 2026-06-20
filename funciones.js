@@ -45,3 +45,9 @@ function insertarContacto(nombre, apellidos, correo, telf) {
     throw new Error('Error al insertar contacto: ' + e.message);
   }
 }
+
+
+function borrarContacto(numFila){
+  let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
+  hoja.deleteRow(numFila);
+}

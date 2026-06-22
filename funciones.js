@@ -51,3 +51,12 @@ function borrarContacto(numFila){
   let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
   hoja.deleteRow(numFila);
 }
+
+
+function modificarContacto(numFila,datos){
+  let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
+  let celdas = hoja.getRange("A"+numFila +":D"+numFila);
+  celdas.setValues([[datos.nombre,datos.apellidos,datos.correo,datos.telf]])
+
+}
+ 

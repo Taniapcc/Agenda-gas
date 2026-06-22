@@ -6,9 +6,7 @@
         <button type="button" class="btn btn-success m-2" onclick="crearTablaContactos()">Mostrar contactos</button>
         <!-- Button trigger modal -->
 
-        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#crearContactoModal">
-            Nuevo Contacto
-        </button>
+        <button type="button" class="btn btn-primary m-2" onclick="abrirModalCrearContacto()">Crear Contacto</button>
     </div>
 
     <!-- Tabla de contactos -->
@@ -32,27 +30,21 @@
     </div>
 
     <!--MODAL-->
-
-
-    <!-- Modal -->
     <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
         aria-hidden="true">
 
         <div class="modal-lg modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloCrearContactoModal">Nuevo Contacto</h5>
+                    <h5 class="modal-title" id="tituloModal">Nuevo Contacto</h5>
                     <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>!-->
                 </div>
                 <!--formulario de crear contactos-->
                 <form onsubmit="insertarContacto()" method="dialog" id="formulario">
 
                     <div class="modal-body">
-
                         <!--Nombres y apellidos-->
-
                         <div class="row mb-3">
-
                             <div class="col-4">
                                 <label for="nombre" class="form-label">Nombres: </label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" pattern="[^0-9]*" title="El nombre no puede contener números" required> 
@@ -71,15 +63,11 @@
 
                             <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
                             <input type="tel" class="form-control" name="telf" id="telf" pattern="[\d]{9,11}" title="El teléfono debe contener entre 9 y11 dígitos numéricos" required>
-
-
-
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Crear Contacto</button>
+                        <button id ="botonCrearModificar" type="submit" class="btn btn-success">Crear Contacto</button>
                     </div>
                 </form>
             </div>

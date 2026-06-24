@@ -46,12 +46,10 @@ function insertarContacto(nombre, apellidos, correo, telf) {
   }
 }
 
-
 function borrarContacto(numFila){
   let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
   hoja.deleteRow(numFila);
 }
-
 
 function modificarContacto(numFila,datos){
   let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();

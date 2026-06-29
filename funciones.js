@@ -3,7 +3,6 @@
 const ID_HOJA = '1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I';
 // SpreadsheetApp.openById('AAA1R--uMJRjDMD1S3B-ul22L9q0ZxUyE5x5LrpdCNxN_-I').getActiveSheet();
 
-
 function doGet(e) {
   // Handle GET request parameters
   const params = e.parameter;
@@ -58,7 +57,7 @@ function modificarContacto(numFila, datos) {
 }
 
 function importarContactos() {
-  let url = 'https://randomuser.me/api/?results=5&inc=name,email,phone';
+  let url = 'https://randomuser.me/api/?results=5&inc=name,email,phone,picture';
   let respuesta = UrlFetchApp.fetch(url).getContentText();
   let datos = JSON.parse(respuesta);
   //datos.results.forEach(contacto => Logger.log(contacto));
@@ -67,5 +66,5 @@ function importarContactos() {
 
 function insertarContactoJson(contacto) {
   let hoja = SpreadsheetApp.openById(ID_HOJA).getActiveSheet();
-  hoja.appendRow([contacto.name.first, contacto.name.last, contacto.email, contacto.phone]);
+  hoja.appendRow([contacto.name.first, contacto.name.last, contacto.email, contacto.phone, contacto.picture.medium]);
 }

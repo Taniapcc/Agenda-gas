@@ -5,8 +5,10 @@
         <!--botones-->
         <button type="button" class="btn btn-success m-2" onclick="crearTablaContactos()">Mostrar contactos</button>
         <!-- Button trigger modal -->
-
         <button type="button" class="btn btn-primary m-2" onclick="abrirModalCrearContacto()">Crear Contacto</button>
+        <!-- Button trigger modal -->
+         <button type="button" class="btn btn-warning m-2" onclick="importarContactos()">+5</button>
+
     </div>
 
     <!-- Tabla de contactos -->
@@ -15,13 +17,12 @@
     </div>
 
     <!-- Notificaciones -->
-     
+
     <div class="div-notificaciones position-fixed bottom-0 end-0 p-3">
         <div class="toast-container" id="contenedorNotificacion">
             <!--Aqui va las notificaciones-->
-
         </div>
-       
+
     </div>
 
     <!--MODAL-->
@@ -42,12 +43,14 @@
                         <div class="row mb-3">
                             <div class="col-4">
                                 <label for="nombre" class="form-label">Nombres: </label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" pattern="[^0-9]*" title="El nombre no puede contener números" required> 
+                                <input type="text" class="form-control" name="nombre" id="nombre" pattern="[^0-9]*"
+                                    title="El nombre no puede contener números" required>
                             </div>
 
                             <div class="col-8">
                                 <label for="apellidos" class="form-label">Apellidos: </label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos" pattern="[^0-9]*" title="El apellido no puede contener números" required>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos"
+                                    pattern="[^0-9]*" title="El apellido no puede contener números" required>
                             </div>
                         </div>
 
@@ -57,12 +60,13 @@
                             <input type="email" class="form-control me-4" name="correo" id="correo" required>
 
                             <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                            <input type="tel" class="form-control" name="telf" id="telf" pattern="[\d]{9,11}" title="El teléfono debe contener entre 9 y11 dígitos numéricos" required>
+                            <input type="tel" class="form-control" name="telf" id="telf" pattern="[\d]{9,11}"
+                                title="El teléfono debe contener entre 9 y11 dígitos numéricos" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button id ="botonCrearModificar" type="submit" class="btn btn-success">Crear Contacto</button>
+                        <button id="botonCrearModificar" type="submit" class="btn btn-success">Crear Contacto</button>
                     </div>
                 </form>
             </div>
